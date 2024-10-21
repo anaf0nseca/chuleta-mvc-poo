@@ -4,48 +4,75 @@ require_once('banco.php');
 
 class Produtos extends Banco {
 
-    public function setProduto($tipo_id, $descricao, $resumo, $valor, $imagem, $destaque){
-        $stmt = $this->mysqli->prepare("INSERT INTO produtos(`login`, `senha`, `nivel`) values(?,?,?,?,?,?)");
-        $stmt->bind_param("ssssss", $tipo_id, $descricao, $resumo, $valor, $imagem, $destaque);
-        if($stmt->execute() == TRUE){
-            return true;
-        }else{
-            return false;
-        }
+    //CADASTRO 
+    private $tipo_id;
+    private $descricao;
+    private $resumo;
+    private $valor;
+    private $imagem;
+    private $destaque;
+
+    public function setTipoId($int){
+        $this->tipo_id = $int;
     }
 
-    public function getProduto(){
-        $result = $this->mysqli->query("SELECT * from produtos");
-
-        while($row = $result->fetch_array(MYSQLI_ASSOC)){
-            $array[] = $row;
-        }
-        return $array;
+    public function setDescricao($string){
+        $this->descricao = $string;
     }
 
-    public function pesquisaProduto($id){
-        $result = $this->mysqli->query("SELECT * FROM produtos WHERE 'descricao' ='$id'");
-        return $result->fetch_array(MYSQLI_ASSOC);
+    public function setResumo($string){
+        $this->resumo = $string;
     }
 
-    public function deleteProduto($id)
-        {
-            if($this->mysqli->query("DELETE FROM 'produtos' WHERE 'descricao' ='".$id."';")==TRUE)
-            {
-                return true;
-            }
-        }
+    public function setValor($double){
+        $this->valor = $double;
+    }
 
- 
+    public function setImagem($string){
+        $this->imagem = $string;
+    }
+
+    public function setDestaque($string){
+        $this->destaque= $string;
+    }
+
+
+    public function getTipoId($int){
+        return $this->tipo_id;
+    }
+
+    public function getDescricao($string){
+        return $this->descricao;
+    }
+
+    public function getResumo($string){
+        return $this->resumo;
+    }
+
+    public function getValor($double){
+        return $this->valor;
+    }
+
+    public function getImagem($string){
+        return $this->imagem;
+    }
+
+    public function getDestaque($string){
+        return $this->destaque;
+    }
+
+
+    public function cadastrar(){
+        return $this->setProduto($this->getTipoId(), $this->getDescricao(), $this->getResumo(), $this->getValor(), $this->getImagem(), $this->getDestaque());
+    }
+
+
+
+    //DESTAQUES
     
-    public function updateProduto($tipo_id, $descricao, $resumo, $valor, $imagem, $destaque){
-        $stmt = $this->mysqli->prepare("UPDATE `produtos` SET `tipo_id` = ?, `descricao` = ?, `resumo`= ?, `valor` = ?, `imagem`= ?, `destaque`= ? WHERE `id` = ?");
-        $stmt->bind_param("ssssss", $tipo_id, $descricao, $resumo, $valor, $imagem, $destaque);
-        if($stmt->execute() == TRUE){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
+
+    
 }
+
+?>
